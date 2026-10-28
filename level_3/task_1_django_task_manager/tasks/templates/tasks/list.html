@@ -1,0 +1,7 @@
+<!doctype html><html><body>
+<header><h1>{{ user.username }}'s tasks</h1><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button>Sign out</button></form></header>
+<h2>Add task</h2><form method="post" action="{% url 'task-create' %}">{% csrf_token %}{{ form.as_p }}<button>Add</button></form>
+<h2>Your list</h2><ul>{% for task in tasks %}<li>{% if task.completed %}<s>{{ task.title }}</s>{% else %}{{ task.title }}{% endif %} - {{ task.description }}
+<form style="display:inline" method="post" action="{% url 'task-toggle' task.id %}">{% csrf_token %}<button>{% if task.completed %}Mark open{% else %}Mark done{% endif %}</button></form>
+<form style="display:inline" method="post" action="{% url 'task-delete' task.id %}">{% csrf_token %}<button>Delete</button></form></li>{% empty %}<li>No tasks yet.</li>{% endfor %}</ul>
+</body></html>
